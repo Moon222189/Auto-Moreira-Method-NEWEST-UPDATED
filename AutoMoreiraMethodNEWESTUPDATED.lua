@@ -1,3 +1,5 @@
+-- Auto Moreira Method - NEWEST UPDATED v6.0
+-- Anti-Cheat Bypass System by Moon222189
 
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
